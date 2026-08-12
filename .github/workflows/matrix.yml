@@ -1,4 +1,4 @@
-name: Matric Demo
+name: Matrix Demo
 
 on:
   workflow_dispatch:
@@ -12,6 +12,6 @@ jobs:
         env: [dev, test, prod]
 
     steps:
-      - name: show Environment
+      - name: Show Environment
         run: |
-          echo: "Deploying to ${{ matrix.env }}"
+          echo "Deploying to ${{ matrix.env }}"
