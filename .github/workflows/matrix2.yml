@@ -1,0 +1,16 @@
+name: nodejs.versions
+
+on: 
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        env: [ 18, 20, 22 ]
+
+    steps:
+      - name: Testing application
+        run: |
+         echo "Testing an appliaction on ${{ matrix.env }}"
