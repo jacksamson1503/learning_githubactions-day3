@@ -1,0 +1,44 @@
+name: Simple Job Output
+
+on:
+  workflow_dispatch:
+
+jobs:
+  first_job:
+    runs-on: ubuntu-latest
+
+    # Convert Step Output to Job Output
+    outputs:
+      # username = Job Output Name
+      # steps.jack = Step ID
+      # outputs.name = Step Output Name
+      username: ${{ steps.jack.outputs.name }}
+
+    steps:
+      - name: Create Name
+
+        # Step ID (can be any name)
+        id: jack
+
+        run: |
+          #Create Step Output
+          #Output Name = name
+          #Output Value = jacksamson
+          echo "name=jacksamson" >> $GITHUB_OUTPUT
+
+  second_job:
+    # Wait for first_job to complete
+    # Allows access to first_job outputs
+    needs: first_job
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Print Name
+
+        run: |
+          # needs.first_job = Access first_job
+          # outputs.username = Job Output Name
+          # Value received = jacksamson
+
+          echo "Hello ${{ needs.first_job.outputs.username }}"
