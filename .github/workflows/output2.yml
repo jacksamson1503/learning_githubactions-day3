@@ -1,0 +1,27 @@
+name: Docker Image Example
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    outputs:
+      image_name: ${{ steps.docker.outputs.image }}
+
+    steps:
+      - name: Create Docker Image Tag
+        id: docker
+        run: |
+          echo "image=jacksamson/nginx:v25" >> $GITHUB_OUTPUT
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy Docker Image
+        run: |
+          echo "Pulling image ${{ needs.build.outputs.image_name }}"
+          echo "Deploying image ${{ needs.build.outputs.image_name }}"
